@@ -1,0 +1,23 @@
+{
+  "name": "yelpcamp",
+  "version": "1.0.0",
+  "description": "final project for webdevbootcamp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielhill13/YelpCamp.git"
+  },
+  "author": "Daniel Hill",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielhill13/YelpCamp/issues"
+  },
+  "homepage": "https://github.com/danielhill13/YelpCamp#readme",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.2"
+  }
+}
