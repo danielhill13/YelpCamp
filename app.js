@@ -27,10 +27,15 @@ app.get("/campgrounds", function(req, res){
         if(err){
             console.log(err);
         } else {
-             res.render("index", {campgrounds: allCampgrounds});
+             res.render("campgrounds/index", {campgrounds: allCampgrounds});
         }
     })
 });
+//NEW campgrounds
+app.get("/campgrounds/new", function(req, res){
+    res.render("campgrounds/new.ejs");
+});
+
 
 //CREATE campground
 app.post("/campgrounds", function(req, res){
@@ -47,56 +52,54 @@ app.post("/campgrounds", function(req, res){
         }
     })
 });
-//NEW
-app.get("/campgrounds/new", function(req, res){
-    res.render("new.ejs");
-});
-app.listen(3000, function(){
-    console.log("YelpCamp Server Has Started");
-});
 
-
-// //SHOW
+//SHOW campgrounds
 app.get("/campgrounds/:id", function(req, res){
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
         if(err){
             console.log(err);
         } else {
-            res.render("show", {campground: foundCampground});
+            res.render("campgrounds/show", {campground: foundCampground});
         }
     });
 })
 
-// //EDIT Route
-// app.get("/campgrounds/:id/edit", function(req, res){
-//     //get ID and put in url
-//     Campground.findById(req.params.id, function(err, foundBlog){
-//         if(err){
-//             res.redirect("/campgrounds");
-//         } else {
-//             res.render("edit", {campground: foundCampground});
-//         }
-//     })
-// });
+//EDIT campground
+//UPDATE campground- kinda confusing - take time to learn this and sanitizer dependency for POST->PUT
+//DESTROY campground
 
-// //UPDATE Route - kinda confusing - take time to learn this and sanitizer dependency for POST->PUT
-// app.put("/blogs/:id", function(req, res){
-//     Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
-//         if(err){
-//             res.redirect("/blogs");
-//         } else {
-//             res.redirect("/blogs/" + req.params.id);
-//         }
-//     });
-// });
 
-// //DESTROY Route
-// app.delete("/blogs/:id", function(req, res){
-//     Blog.findByIdAndRemove(req.params.id, function(err){
-//         if(err){
-//             res.redirect("/blogs");
-//         } else{
-//             res.redirect("/blogs");
-//         }
-//     })
-// });
+//=================
+// COMMENT ROUTES
+//=================
+
+app.get("/campgrounds/:id/comments/new", function(req, res){
+    Campground.findById(req.params.id, function(err, campground){
+        if(err){
+            console.log(err);
+        }else {
+    res.render("comments/new", {campground: campground});
+        }
+    })
+});
+
+app.post("/campgrounds/:id/comments", function(req, res){
+    Campground.findById(req.params.id, function(err, campground){
+        if(err){
+            console.log(err);
+            res.redirect("/campgrounds");
+        } else {
+            //create new comment
+            Comment.create(req.body.comment, function(err, comment){
+                if(err){
+                    console.log(err);
+                } else {
+                    campground.comments.push(comment);
+                    campground.save();
+                    res.redirect("/campgrounds/" + campground._id);
+    }})}})})
+
+
+app.listen(3000, function(){
+    console.log("YelpCamp Server Has Started");
+});
