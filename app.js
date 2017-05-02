@@ -1,42 +1,53 @@
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
+var express = require("express"),
+    app = express(),
+    bodyParser = require("body-parser"),
+    mongoose = require("mongoose"),
+    Campground = require("./models/campground");
+    Comment = require("./models/comment"),
+    // User = require("./models/user");
+    seedDB = require("./seeds");
 
+//APP CONFIG
+mongoose.connect("mongodb://localhost/yelp_camp");
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.set("view engine", "ejs");
 
-var campgrounds = [
-    {name: "Salmon Creek", image: "https://media-cdn.tripadvisor.com/media/photo-s/02/93/7b/64/filename-dsc0326-jpg.jpg"},
-    {name: "Granite Hill", image: "https://cdn0.vox-cdn.com/thumbor/cJsjf1KCt0lSO7wyOe6Vm6nFxGk=/0x271:5225x3210/1600x900/cdn0.vox-cdn.com/uploads/chorus_image/image/54137641/camping_tents.0.jpg"},
-    {name: "Mountain Goat's Rest", image: "https://cdn.pixabay.com/photo/2015/07/09/01/59/picnic-table-837221__340.jpg"},
-    {name: "Salmon Creek", image: "https://media-cdn.tripadvisor.com/media/photo-s/02/93/7b/64/filename-dsc0326-jpg.jpg"},
-    {name: "Granite Hill", image: "https://cdn0.vox-cdn.com/thumbor/cJsjf1KCt0lSO7wyOe6Vm6nFxGk=/0x271:5225x3210/1600x900/cdn0.vox-cdn.com/uploads/chorus_image/image/54137641/camping_tents.0.jpg"},
-    {name: "Mountain Goat's Rest", image: "https://cdn.pixabay.com/photo/2015/07/09/01/59/picnic-table-837221__340.jpg"},
-    {name: "Salmon Creek", image: "https://media-cdn.tripadvisor.com/media/photo-s/02/93/7b/64/filename-dsc0326-jpg.jpg"},
-    {name: "Granite Hill", image: "https://cdn0.vox-cdn.com/thumbor/cJsjf1KCt0lSO7wyOe6Vm6nFxGk=/0x271:5225x3210/1600x900/cdn0.vox-cdn.com/uploads/chorus_image/image/54137641/camping_tents.0.jpg"},
-    {name: "Mountain Goat's Rest", image: "https://cdn.pixabay.com/photo/2015/07/09/01/59/picnic-table-837221__340.jpg"},
-    {name: "Salmon Creek", image: "https://media-cdn.tripadvisor.com/media/photo-s/02/93/7b/64/filename-dsc0326-jpg.jpg"},
-    {name: "Granite Hill", image: "https://cdn0.vox-cdn.com/thumbor/cJsjf1KCt0lSO7wyOe6Vm6nFxGk=/0x271:5225x3210/1600x900/cdn0.vox-cdn.com/uploads/chorus_image/image/54137641/camping_tents.0.jpg"},
-    {name: "Mountain Goat's Rest", image: "https://cdn.pixabay.com/photo/2015/07/09/01/59/picnic-table-837221__340.jpg"}
-];
+//SEED THE DB
+seedDB();
 
+//LANDING PAGE
 app.get("/", function(req, res){
     res.render("landing");
 });
 
+//INDEX campgrounds
 app.get("/campgrounds", function(req, res){
-    res.render("campgrounds", {campgrounds: campgrounds});
+    //GET ALL  CAMPGROUNDS
+    Campground.find({}, function(err, allCampgrounds){
+        if(err){
+            console.log(err);
+        } else {
+             res.render("index", {campgrounds: allCampgrounds});
+        }
+    })
 });
 
+//CREATE campground
 app.post("/campgrounds", function(req, res){
     var name = req.body.name;
     var image = req.body.image;
-    var newCampground = {name: name, image: image}
-    campgrounds.push(newCampground);
-    res.redirect("/campgrounds");
+    var description = req.body.description;
+    var newCampground = {name: name, image: image, description: description}
+    //CREATE NEW CAMPGROUND AND SAVE TO DB
+    Campground.create(newCampground, function(err, newCampground){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/campgrounds");
+        }
+    })
 });
-
+//NEW
 app.get("/campgrounds/new", function(req, res){
     res.render("new.ejs");
 });
@@ -45,9 +56,47 @@ app.listen(3000, function(){
 });
 
 
-/*
-Setup new campground POST route
-Add in body parser
-setup route to show form
-add basic form
-*/
+// //SHOW
+app.get("/campgrounds/:id", function(req, res){
+    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("show", {campground: foundCampground});
+        }
+    });
+})
+
+// //EDIT Route
+// app.get("/campgrounds/:id/edit", function(req, res){
+//     //get ID and put in url
+//     Campground.findById(req.params.id, function(err, foundBlog){
+//         if(err){
+//             res.redirect("/campgrounds");
+//         } else {
+//             res.render("edit", {campground: foundCampground});
+//         }
+//     })
+// });
+
+// //UPDATE Route - kinda confusing - take time to learn this and sanitizer dependency for POST->PUT
+// app.put("/blogs/:id", function(req, res){
+//     Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
+//         if(err){
+//             res.redirect("/blogs");
+//         } else {
+//             res.redirect("/blogs/" + req.params.id);
+//         }
+//     });
+// });
+
+// //DESTROY Route
+// app.delete("/blogs/:id", function(req, res){
+//     Blog.findByIdAndRemove(req.params.id, function(err){
+//         if(err){
+//             res.redirect("/blogs");
+//         } else{
+//             res.redirect("/blogs");
+//         }
+//     })
+// });
