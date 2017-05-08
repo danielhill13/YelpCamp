@@ -6,13 +6,13 @@ var data = [{
     image: "http://i.imgur.com/RW0Xv7G.jpg",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lobortis felis semper, semper turpis vitae, ornare nulla. Sed faucibus nisl magna, vitae venenatis dolor consectetur ut. Proin vehicula accumsan lobortis. Nulla non arcu vel lorem sodales dignissim id ut nulla. Phasellus ornare et ex in posuere. Morbi ligula turpis, facilisis nec mauris a, accumsan lacinia orci."
     },
-    {name: "Hop Valley Trailhead",
-    image: "http://i.imgur.com/q6Tre1m.jpg",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lobortis felis semper, semper turpis vitae, ornare nulla. Sed faucibus nisl magna, vitae venenatis dolor consectetur ut. Proin vehicula accumsan lobortis. Nulla non arcu vel lorem sodales dignissim id ut nulla. Phasellus ornare et ex in posuere. Morbi ligula turpis, facilisis nec mauris a, accumsan lacinia orci."
-    },
     {name: "Pinecone Valley",
     image: "http://i.imgur.com/3PL1Nag.jpg",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lobortis felis semper, semper turpis vitae, ornare nulla. Sed faucibus nisl magna, vitae venenatis dolor consectetur ut. Proin vehicula accumsan lobortis. Nulla non arcu vel lorem sodales dignissim id ut nulla. Phasellus ornare et ex in posuere. Morbi ligula turpis, facilisis nec mauris a, accumsan lacinia orci."
+    },
+    {name: "Happy Tree Trails",
+    image: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Camping_ground_in_Kippel.jpg",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     }
 ];
 
