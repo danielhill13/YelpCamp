@@ -18,22 +18,22 @@ var data = [{
 
 
 
-function seedDB(){
-    //Remove all campgrounds
-    Campground.remove({}, function(err){
-        if(err){
-            console.log(err)
-        } else{
-        console.log("Removed all campgrounds");
-        }
-    })
-    Comment.remove({}, function(err){
-        if(err){
-            console.log(err)
-        } else{
-        console.log("Removed all comments");
-        }
-    });
+// function seedDB(){
+//     //Remove all campgrounds
+//     Campground.remove({}, function(err){
+//         if(err){
+//             console.log(err)
+//         } else{
+//         console.log("Removed all campgrounds");
+//         }
+//     })
+//     Comment.remove({}, function(err){
+//         if(err){
+//             console.log(err)
+//         } else{
+//         console.log("Removed all comments");
+//         }
+//     });
     //Add some campgrounds
     // data.forEach(function(seed){
     // Campground.create(seed, function(err, campground){
@@ -57,6 +57,6 @@ function seedDB(){
     //     }
     // });
     // });
-};
+// };
 
-module.exports = seedDB;
+// module.exports = seedDB;

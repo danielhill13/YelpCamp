@@ -11,6 +11,6 @@ body {
     width: 100%
 }
 
-#delete-form {
+.delete-form {
     display: inline;
 }
