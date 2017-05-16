@@ -24,6 +24,7 @@
     "express": "^4.15.2",
     "express-session": "^1.15.2",
     "method-override": "^2.3.8",
+    "mongoclient": "^1.0.3",
     "mongodb": "^2.2.26",
     "mongoose": "^4.9.7",
     "passport": "^0.3.2",

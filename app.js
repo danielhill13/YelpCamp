@@ -9,7 +9,8 @@ var express        = require("express"),
     Comment        = require("./models/comment"),
     User           = require("./models/user"),
     seedDB         = require("./seeds")
-    methodOverride = require("method-override");
+    methodOverride = require("method-override"),
+    MongoClient    = require("mongodb");
 
 //Routes Requires
 var commentRoutes = require("./routes/comments"),
@@ -17,7 +18,7 @@ var commentRoutes = require("./routes/comments"),
     indexRoutes = require("./routes/index");
 
 //APP CONFIG
-mongoose.connect("mongodb://daniel:happyyelpcamp@ds141401.mlab.com:41401/yelpcamp");
+mongoose.connect("mongodb://localhost:27017/yelp_camp");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"))
