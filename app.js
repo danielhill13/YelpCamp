@@ -19,10 +19,9 @@ var commentRoutes = require("./routes/comments"),
     indexRoutes = require("./routes/index");
 
 //APP CONFIG
-mongoose.connect(process.env.DATABASEURL);
-// mongoose.connect("mongodb://danielhill13:yelpcamp@yelpcamp-shard-00-00-bfssn.mongodb.net:27017,yelpcamp-shard-00-01-bfssn.mongodb.net:27017,yelpcamp-shard-00-02-bfssn.mongodb.net:27017/yelpcamp?ssl=true&replicaSet=yelpcamp-shard-0&authSource=admin");
+var dbUrl = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp";
+mongoose.connect(dbUrl);
 
-// process.env.databaseURL
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
